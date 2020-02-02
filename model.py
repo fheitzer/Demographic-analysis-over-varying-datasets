@@ -1,7 +1,6 @@
 import pandas as pd
 
 
-
 def import_clean_istat():
     """Importing and cleaning ISTAT.
         returns istat as pandas.dataframe"""
@@ -21,7 +20,6 @@ def import_clean_istat():
     istat = istat.drop(['population at the beginning of the period', 'population at end of the period'], axis=1)
 
     return istat
-
 
 
 if __name__ == "__main__":
