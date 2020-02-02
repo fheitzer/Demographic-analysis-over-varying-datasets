@@ -1,4 +1,5 @@
 import pandas as pd
+import pycountry_convert as pc
 
 
 def import_clean_istat():
@@ -15,16 +16,50 @@ def import_clean_istat():
     # Reshape the table
     istat = istat.pivot_table('Value', ['Select time'], 'Demographic data type')
     istat = istat.sort_index()
-    istat['population'] = istat[['population at the beginning of the period',
+    istat['Population'] = istat[['population at the beginning of the period',
                                  'population at end of the period']].mean(axis=1)
     istat = istat.drop(['population at the beginning of the period', 'population at end of the period'], axis=1)
 
     return istat
 
 
+def import_clean_eurostat(data_name: str):
+    """Importing and cleaning EUROSTAT.
+        returns EUROSTAT as pandas.dataframe"""
+
+    # Import
+    eurostat = pd.read_csv(f"data/{data_name}.csv")
+
+    # Clean
+    eurostat = eurostat[eurostat['Value'] != ':']
+    eurostat['Value'] = eurostat['Value'].apply(lambda x: float(x.replace(",", "")))
+
+    return eurostat
+
+
+def merge_eurostat():
+
+    eurostat_pop = import_clean_eurostat('eurostat_population')
+    eurostat_pop['INDIC_DE'] = eurostat_pop['INDIC_DE'].apply(lambda x: x[:-8])
+    eurostat_pop = eurostat_pop.pivot_table('Value', ['GEO', 'TIME'], 'INDIC_DE', aggfunc='first')
+    eurostat_pop.rename(columns={'Average population': 'Population'}, inplace=True)
+
+    eurostat_im = import_clean_eurostat('eurostat_immigration')
+    eurostat_im = eurostat_im.pivot_table('Value', ['TIME'], 'GEO', aggfunc='first')
+
+    eurostat_em = import_clean_eurostat('eurostat_emigration')
+    eurostat_em = eurostat_em.pivot_table('Value', ['TIME'], 'GEO', aggfunc='first')
+
+
+
+    print(eurostat_im)
+    print(eurostat_em)
+    print(eurostat_pop)
+
+
+
+
 if __name__ == "__main__":
 
-    data_eurostat = import_clean_eurostat()
-    data_istat = import_clean_istat()
-    print(data_eurostat)
-    print(data_istat)
+    #merge_eurostat()
+
