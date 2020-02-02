@@ -1,26 +1,32 @@
 import pandas as pd
 
+
+
+def import_clean_istat():
+    """Importing and cleaning ISTAT.
+        returns istat as pandas.dataframe"""
+    # Import
+    istat = pd.read_csv("data/ISTAT.csv")
+
+    # Drop column information that is not in our interest
+    istat = istat[istat["Territory"] == "Italy"]
+    istat = istat[istat['Gender'] == "total"]
+    istat = istat[istat['Select time'].str.contains('^\d*$', regex=True, na=False)]
+
+    # Reshape the table
+    istat = istat.pivot_table('Value', ['Select time'], 'Demographic data type')
+    istat = istat.sort_index()
+    istat['population'] = istat[['population at the beginning of the period',
+                                 'population at end of the period']].mean(axis=1)
+    istat = istat.drop(['population at the beginning of the period', 'population at end of the period'], axis=1)
+
+    return istat
+
+
+
 if __name__ == "__main__":
-    dataeurostat = pd.read_csv("data/demo_gind/demo_gind_1_Data.csv")
-    print(dataeurostat)
 
-    dataistat = pd.read_csv("data/ISTAT.csv")
-    dataistat = pd.DataFrame(dataistat)
-    dataistat = dataistat[dataistat["Territory"] == "Italy"]
-    dataistat = dataistat[dataistat['Gender'] == "total"]
-    dataistat = dataistat[dataistat['Select time'].str.contains('^\d*$', regex=True, na=False)]
-    print(dataistat['Demographic data type'].drop_duplicates())
-
-    #dataistat = dataistat.set_index(['Select time'])
-    dataistat = dataistat.pivot_table('Value', ['Select time'], 'Demographic data type')
-    dataistat = dataistat.sort_index()
-    dataistat['population'] = dataistat[['population at the beginning of the period', 'population at end of the period']].mean(axis=1)
-    dataistat = dataistat.drop(['population at the beginning of the period', 'population at end of the period'], axis=1)
-    print(dataistat.head(20))
-    print(dataistat.info())
-
-    #dataistat = dataistat["Value"]
-    #dataistat = pd.DataFrame(dataistat)
-    #dataistat.columns = ["Population"]
-
-
+    data_eurostat = import_clean_eurostat()
+    data_istat = import_clean_istat()
+    print(data_eurostat)
+    print(data_istat)
