@@ -57,8 +57,30 @@ def merge_eurostat():
     print(eurostat_pop)
 
 
+def import_clean_OECD(data_name):
+    """Importing and cleaning OECD.
+        returns istat as pandas.dataframe"""
+
+    oecd = pd.read_csv(f'data/{data_name}.csv')
+    oecd['Value'] = oecd['Value'].apply(lambda value: float(value * 1000000))
+    oecd = oecd[oecd['LOCATION'].apply(lambda x: len(x) == 3)]
+    oecd = oecd[oecd['LOCATION'].apply(lambda x: pc.country_alpha2_to_continent_code(country_2_code=pc.country_alpha3_to_country_alpha2(x)) == 'EU')]
+
+
+    oecd['LOCATION'] = oecd['LOCATION'].apply(lambda x: pc.map_country_alpha3_to_country_name()[x])
+    oecd = oecd.pivot_table('Value', ['TIME'], 'LOCATION', aggfunc='first')
+
+    return oecd
+
+
+def merge_oecd():
+    oecd_birth = import_clean_OECD('OECD_birth')
+
+    oecd_pop = import_clean_OECD('OECD_population')
+    print(oecd_birth)
+    print(oecd_pop)
 
 
 if __name__ == "__main__":
 
-    merge_eurostat()
+    merge_oecd()
