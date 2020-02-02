@@ -61,5 +61,4 @@ def merge_eurostat():
 
 if __name__ == "__main__":
 
-    #merge_eurostat()
-
+    merge_eurostat()
