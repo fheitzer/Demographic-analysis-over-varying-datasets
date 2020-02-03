@@ -22,8 +22,8 @@ program.
 
 ### Planned User Stories
 #### Import, clean & merge datasets
-<p align="center">
 
+<p align="center">
 Check for the dataset for duplicate country/year combinations, if every column of interest is displayed and that the
 year range is from 1950-2018. <br />
 Estimated Time: 5 hours <br />
@@ -31,8 +31,8 @@ Priority: 10/10
 </p>
 
 #### Display data using the Bokeh
-<p align="center">
 
+<p align="center">
 Display the data. <br />
 Estimated time: 4 hours <br />
 Priority: 10/10
