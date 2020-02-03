@@ -20,16 +20,16 @@ running. I am concerned with the functions at their core so every planned featur
 program.
 
 ### Planned User Stories
-#### Import, clean & merge datasets
 <p align="center">
+**Import, clean & merge datasets**
+
 Display the returned dataset, check for duplicate country/year combinations, if every column of interest is displayed. <br />
 Estimated Time: 5 hours <br />
 Priority: 10/10
-</p>
 
 #### Display data using the Bokeh
 
-
+</p>
 
 
 
