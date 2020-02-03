@@ -77,8 +77,7 @@ def merge_oecd():
     oecd_birth = import_clean_OECD('OECD_birth')
 
     oecd_pop = import_clean_OECD('OECD_population')
-    print(oecd_birth)
-    print(oecd_pop)
+
 
 
 if __name__ == "__main__":
