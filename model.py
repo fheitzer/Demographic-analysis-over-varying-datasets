@@ -15,6 +15,7 @@ def import_clean_istat():
 
     # Reshape the table
     istat.rename(columns={'Select time': 'Year', 'Territory': 'Country'}, inplace=True)
+    istat['Year'] = istat['Year'].apply(lambda x: int(x))
     istat = istat.pivot_table('Value', ['Country', 'Year'], 'Demographic data type')
     istat = istat.sort_index()
 
@@ -49,7 +50,8 @@ def merge_eurostat():
     eurostat_pop = import_clean_eurostat('eurostat_population')
     eurostat_pop['INDIC_DE'] = eurostat_pop['INDIC_DE'].apply(lambda x: x[:-8])
     eurostat_pop = eurostat_pop.pivot_table('Value', ['GEO', 'TIME'], 'INDIC_DE', aggfunc='first')
-    eurostat_pop.rename(columns={'Average population': 'Population'}, inplace=True)
+    eurostat_pop.rename(columns={'Average population': 'Population', 'Live births': 'Births'}, inplace=True)
+    eurostat_pop.sort_index(inplace=True)
 
 
     eurostat_im = import_clean_eurostat('eurostat_immigration')
@@ -92,15 +94,12 @@ def merge_oecd() -> pd.DataFrame:
     oecd_pop = import_clean_OECD('Population')
 
     oecd = pd.concat([oecd_pop, oecd_birth], axis=1)
+    oecd.sort_index(inplace=True)
 
     return oecd
 
+
+
 if __name__ == "__main__":
 
-    oecd = merge_oecd()
-    print(oecd)
-    eurostat = merge_eurostat()
-    print(eurostat)
-    istat = import_clean_istat()
-    print(istat)
-    print(pd.concat([oecd, istat, eurostat]))
+    print("Hello world!")
