@@ -11,7 +11,7 @@ def import_clean_istat() -> pd.DataFrame:
     # Drop column information that is not in our interest
     istat = istat[istat["Territory"] == "Italy"]
     istat = istat[istat['Gender'] == "total"]
-    istat = istat[istat['Select time'].str.contains('^\d*$', regex=True, na=False)]
+    istat = istat[istat['Select time'].str.contains(r'^\d*$', regex=True, na=False)]
 
     # Reshape the table
     istat.rename(columns={'Select time': 'Year', 'Territory': 'Country'}, inplace=True)
@@ -28,6 +28,7 @@ def import_clean_istat() -> pd.DataFrame:
     istat.rename(columns={'deaths': 'Deaths', 'emigrated to other countries': 'Emigration',
                           'immigrated from other countries': 'Immigration', 'live births': 'Births'}, inplace=True)
 
+    print(istat.loc[('Italy', 2011)]['Deaths'])
     return istat
 
 
@@ -128,6 +129,5 @@ def merge_datasets() -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-
     dataset = merge_datasets()
     print(dataset)
