@@ -13,6 +13,7 @@ In general, this leads to different publicly available data sets containing demo
 same time window and same geographical region, different data sets may contain inconsistent values for the same process
 (e.g., ISTAT and EUROSTAT might declare two different values for the population of Italy in 2005).
 
+
 ## Iteration 1 - Setting up
 In this iteration I want to concentrate on cleaning the data I need, merging the dataframes and simply displaying it.
 I am not trying to develop fancy interactive graphs and continuously updated data. I just want to get the program up and
@@ -20,17 +21,26 @@ running. I am concerned with the functions at their core so every planned featur
 program.
 
 ### Planned User Stories
+####Import, clean & merge datasets
 <p align="center">
-**Import, clean & merge datasets**
 
-Display the returned dataset, check for duplicate country/year combinations, if every column of interest is displayed. <br />
+Check for the dataset for duplicate country/year combinations, if every column of interest is displayed and that the
+year range is from 1950-2018. <br />
 Estimated Time: 5 hours <br />
 Priority: 10/10
 
 #### Display data using the Bokeh
 
+Display the data. <br />
+Estimated time: 4 hours <br />
+Priority: 10/10
+
 </p>
 
+### Design choices
+
+At first I implemented the algorithms in a Extreme Programming fashion. Not thinking too much about design patterns.
+During the Refactoring process I determined and implemented certain design patterns. <br />
 
 
-## Iteration 2 - Improving maodularity and maintainability
+## Iteration 2 - Improving modularity and maintainability
