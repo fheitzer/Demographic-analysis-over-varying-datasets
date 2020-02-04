@@ -1,5 +1,6 @@
 import pandas as pd
 import pycountry_convert as pc
+import regex as re
 
 
 def import_clean_istat() -> pd.DataFrame:
@@ -28,7 +29,6 @@ def import_clean_istat() -> pd.DataFrame:
     istat.rename(columns={'deaths': 'Deaths', 'emigrated to other countries': 'Emigration',
                           'immigrated from other countries': 'Immigration', 'live births': 'Births'}, inplace=True)
 
-    print(istat.loc[('Italy', 2011)]['Deaths'])
     return istat
 
 
@@ -96,8 +96,8 @@ def merge_oecd() -> pd.DataFrame:
     """Import oecd datasets & concatenate"""
 
     # Import
-    oecd_birth = import_clean_oecd('Births')
     oecd_pop = import_clean_oecd('Population')
+    oecd_birth = import_clean_oecd('Births')
 
     # Concatenate
     oecd = pd.concat([oecd_pop, oecd_birth], axis=1)
@@ -124,10 +124,13 @@ def merge_datasets() -> pd.DataFrame:
     merge = merge.groupby(merge.index).mean()
     merge.sort_index(inplace=True)
     merge.set_index(index, inplace=True)
+    merge.reset_index(inplace=True)
 
+    # Kicking out general Europe entries
+    merge = merge[~merge.Country.str.contains("urope")]
     return merge
 
 
 if __name__ == "__main__":
-    dataset = merge_datasets()
-    print(dataset)
+    data = merge_datasets()
+    print(data)
