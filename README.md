@@ -1,4 +1,4 @@
-# Demographic analysis over varying datasets
+# European demographic visualisation over varying datasets
 Datasets are different, but in their combined knowledge lies the truth.
 
 ## Context
