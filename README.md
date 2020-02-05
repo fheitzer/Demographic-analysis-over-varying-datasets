@@ -55,6 +55,8 @@ This is the reason why I took way too long to do the first Iteration and cannot 
 
 ## Iteration 2 - Improving modularity and maintainability
 
+In this Iteration I plan on improving the importing functionalities and making the prototype actually interactive.
+
 ### Planned User Stories
 
 #### Merge datapoints that represent the same country, but are written differently
