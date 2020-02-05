@@ -21,6 +21,7 @@ running. I am concerned with the functions at their core so every planned featur
 program.
 
 ### Planned User Stories
+
 #### Import, clean & merge datasets
 
 <p align="center">
@@ -44,5 +45,40 @@ Priority: 10/10
 At first I implemented the algorithms in a Extreme Programming fashion. Not thinking too much about design patterns.
 During the Refactoring process I determined and implemented certain design patterns. <br />
 
+For the data gathering I kind of used a startegy approach. 
+
+### Resumé
+
+I implemented both user stories, but I wrote them in too much of a general fashion.
+Therefore the estimated time was off and the clarity of how detailed the implementation is supposed to be was not given.
+This is the reason why I took way too long to do the first Iteration and cannot do a second one.
 
 ## Iteration 2 - Improving modularity and maintainability
+
+### Planned User Stories
+
+#### Merge datapoints that represent the same country, but are written differently
+
+<p align="center">
+Check if "France (Metropolitan) is in the dataset<br />
+Estimated Time: 1 hours <br />
+Priority: 8/10
+</p>
+
+#### Add an interactive country List to view
+
+<p align="center">
+C. <br />
+Estimated time: 4 hours <br />
+Priority: 9/10
+</p>
+
+
+#### Add an interactive year range to view
+
+<p align="center">
+Look at the html. <br />
+Estimated time: 4 hours <br />
+Priority: 6/10
+</p>
+
