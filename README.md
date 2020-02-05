@@ -68,7 +68,7 @@ Priority: 8/10
 #### Add an interactive country List to view
 
 <p align="center">
-C. <br />
+Look for such an object in the index.html.. <br />
 Estimated time: 4 hours <br />
 Priority: 9/10
 </p>
@@ -77,8 +77,10 @@ Priority: 9/10
 #### Add an interactive year range to view
 
 <p align="center">
-Look at the html. <br />
+Look for such an object in the index.html. <br />
 Estimated time: 4 hours <br />
 Priority: 6/10
 </p>
+
+
 
