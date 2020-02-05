@@ -12,17 +12,17 @@ class View:
 
     def __init__(self, data):
         self.data = data
+        self.lines = list()
 
     def visualise(self):
         """This function visualises our whole datatset"""
         # output to static HTML file
         output_file("index.html")
-        lines = list()
         for data_type in self.data.columns[2:]:
-            lines.append(self._make_line(data_type))
+            self.lines.append(self._make_line(data_type))
 
         # show the results
-        show(Tabs(tabs=lines))
+        show(Tabs(tabs=self.lines))
 
     def _make_line(self, interest):
         """Initialize a line for a certain demopgraphic data type."""

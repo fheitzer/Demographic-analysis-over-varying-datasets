@@ -118,3 +118,37 @@ class OECDGatherer(DataGatherer):
     def merge(self):
         self.data = pd.concat(self.data, axis=1)
         self.data.sort_index(inplace=True)
+
+
+def merge_all_data():
+    """Use all the different gatherers to get a whole dataframe."""
+
+    oecd = OECDGatherer()
+    oecd.gather('Population')
+    oecd.gather('Births')
+    oecd.merge()
+
+    istat = ISTATGatherer()
+    istat.gather()
+
+    eurostat = EUROSTATGatherer()
+    eurostat.gather('Population')
+    eurostat.gather('Immigration')
+    eurostat.gather('Emigration')
+    eurostat.merge()
+
+    # Concatinate datasets
+    data = pd.concat([oecd.data, istat.data, eurostat.data])
+    data.sort_index(inplace=True)
+
+    # Save index, groupby index to average multiple values, get old index without duplicates
+    index = data.index.drop_duplicates()
+    data = data.groupby(data.index).mean()
+    data.sort_index(inplace=True)
+    data.set_index(index, inplace=True)
+    data.reset_index(inplace=True)
+
+    # Kicking out general Europe entries
+    data = data[~data.Country.str.contains("urope")]
+
+    return data

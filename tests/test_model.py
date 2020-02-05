@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-import model
+from model import merge_all_data
 import numpy
 
 """
@@ -8,6 +8,9 @@ This is a collection of pytests for the model.py functionalities.
 """
 
 
-def test_import_clean_istat():
-    data = model.import_clean_istat()
-    assert data.loc[('Italy', 2011)].Deaths == 139009
+def test_merge_all_data():
+    data = merge_all_data()
+    data = data[(data['Country'] == 'Italy') & (data['Year'] == 2011)]
+    print(data)
+    assert float(data.Deaths) == 366218.0
+
