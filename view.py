@@ -40,6 +40,7 @@ def make_line(interest, data):
     return tab
 
 
+
 if __name__ == "__main__":
     data = model.merge_datasets()
     visualise(data)
