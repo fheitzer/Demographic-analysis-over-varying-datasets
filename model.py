@@ -76,6 +76,7 @@ class EUROSTATGatherer(DataGatherer):
 
         else:
             eurostat.rename(columns={'Value': data_name, 'GEO': 'Country', 'TIME': 'Year'}, inplace=True)
+            eurostat['Country'] = eurostat['Country'].apply(lambda x: str(x).split(' ')[0] if re.match(r'[France|Germany].*', str(x)) else x)
             eurostat.set_index(['Country', 'Year'], inplace=True)
             eurostat.sort_index(inplace=True)
             eurostat = pd.DataFrame(eurostat[data_name])
@@ -85,6 +86,12 @@ class EUROSTATGatherer(DataGatherer):
     def merge(self):
         self.data = pd.concat(self.data, axis=1)
         self.data.sort_index(inplace=True)
+
+    #def _del_desc(self, x):
+     #   if re.match(r'.*\(.*\)', x):
+      #      dummy = x.split()
+       #     return
+        #    else x
 
 
 class OECDGatherer(DataGatherer):
@@ -99,6 +106,9 @@ class OECDGatherer(DataGatherer):
         # Import, Rename, adjust values in million
         oecd = pd.read_csv(f'data/OECD_{data_name}.csv')
         oecd.rename(columns={'LOCATION': 'Country', 'TIME': 'Year', 'Value': data_name}, inplace=True)
+        oecd['Country'] = oecd['Country'].apply(
+            lambda x: x.split(' ')[0] if re.match(r'[France|Germany].*', x) else x)
+
         oecd[data_name] = oecd[data_name].apply(lambda value: float(value * 1000000))
 
         # Kick out every country with the wrong code len (they're not in europe anyways) & not in europe

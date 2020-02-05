@@ -8,5 +8,5 @@ if __name__ == "__main__":
     data = merge_all_data()
 
     # Lets visualise it
-    #viewer = View(data)
-    #viewer.visualise()
+    viewer = View(data)
+    viewer.visualise()
